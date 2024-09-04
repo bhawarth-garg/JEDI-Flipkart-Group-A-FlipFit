@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JEDI-Flipkart-Group-A-FlipFit.iml" filepath="$PROJECT_DIR$/JEDI-Flipkart-Group-A-FlipFit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JEDI-Flipkart-Group-A-FlipFit-UML-Artifacts/JEDI-Flipkart-Group-A-FlipFit-UML-Artifacts.iml" filepath="$PROJECT_DIR$/JEDI-Flipkart-Group-A-FlipFit-UML-Artifacts/JEDI-Flipkart-Group-A-FlipFit-UML-Artifacts.iml" />
       <module fileurl="file://$PROJECT_DIR$/JEDI-Flipkart-Group-A-Flipfit-POS/JEDI-Flipkart-Group-A-Flipfit-POS.iml" filepath="$PROJECT_DIR$/JEDI-Flipkart-Group-A-Flipfit-POS/JEDI-Flipkart-Group-A-Flipfit-POS.iml" />
     </modules>
   </component>
