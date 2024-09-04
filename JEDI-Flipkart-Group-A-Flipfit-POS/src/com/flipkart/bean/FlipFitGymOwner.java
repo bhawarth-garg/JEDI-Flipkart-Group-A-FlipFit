@@ -7,7 +7,6 @@ public class FlipFitGymOwner {
     private String password;
     private String phoneNo;
     private String nationalId;
-    private String GST;
     private List<FlipFitGym> flipFitGyms;
     private String PAN;
 
@@ -51,13 +50,7 @@ public class FlipFitGymOwner {
         this.nationalId = nationalId;
     }
 
-    public String getGST() {
-        return GST;
-    }
 
-    public void setGST(String GST) {
-        this.GST = GST;
-    }
 
     public List<FlipFitGym> getFlipFitGyms() {
         return flipFitGyms;
