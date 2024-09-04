@@ -7,7 +7,7 @@ import com.flipkart.bean.FlipFitGymOwner;
 import com.flipkart.bean.FlipFitSlots;
 import com.flipkart.business.FlipFitAdminService;
 import com.flipkart.business.FlipFitAdminServiceOperation;
-import com.flipkart.utils.DatabaseConnector;
+//import com.flipkart.utils.DatabaseConnector;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

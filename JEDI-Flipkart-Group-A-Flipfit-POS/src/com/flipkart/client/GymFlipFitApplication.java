@@ -3,7 +3,7 @@ import com.flipkart.business.FlipFitGymOwnerService;
 import com.flipkart.business.FlipFitGymOwnerServiceOperation;
 import com.flipkart.business.FlipFitUserServiceOperations;
 import com.flipkart.business.FlipFitUserServices;
-import com.flipkart.utils.DatabaseConnector;
+//import com.flipkart.utils.DatabaseConnector;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -117,15 +117,24 @@ public class GymFlipFitApplication {
                             break;
 
                         case "Customer" :
+
+//                            GymFlipFitCustomerMenu customer = new GymFlipFitCustomerMenu();
                             if(!customer.userLogin(userId,password))
                                 System.out.println("Invalid credentials");
+
                             break;
+
+
+
+
                         case "GymOwner" :
+//                            GymFlipFitGymOwnerMenu owner= new GymFlipFitGymOwnerMenu();
                             if(!owner.gymOwnerLogin(userId,password)){
                                 System.out.println("Invalid credentials");
                             }
 
                             break;
+
                         default:
                             System.out.println("Invalid Options Selected. Please Try Again:(");
                             break;
@@ -133,22 +142,9 @@ public class GymFlipFitApplication {
                     }
 
                     break;
-                case 1 :
-                    System.out.println("Press 1 to Register as a GymOwner");
-                    System.out.println("Press 2 to Register as a Customer");
-                    System.out.println("Press 3 to Go Back");
-                    int k = Integer.parseInt(obj.nextLine());
-                    switch(k){
-                        case 2:
-                            customer.createCustomer();
-                            break;
-                        case 1:
-                            owner.createGymOwner();
-                        default:
-                            break;
-                    }
-                    break;
-                case 3 :
+
+
+                case 2:
                     System.out.println("-----------Password Change -----------------------");
                     System.out.println("Enter email");
                     String user = obj.nextLine();
@@ -178,11 +174,27 @@ public class GymFlipFitApplication {
                             break;
                     }
                     break;
+
+
+                case 3 :
+                    customer.createCustomer();
+                    System.out.println("Customer Registration Successful");
+                    break;
+
                 case 4 :
+
+                    owner.createGymOwner();
+                    System.out.println("Gym Owner Registration Successful");
+
+                    break;
+
+
+                case 5 :
                     //end
                     exitFlag = true;
                     System.out.println("Thank you for using FlipFit :)");
                     break;
+
                 default:
                     System.out.println("Invalid Options Selected. Please Try Again:( ");
                     break;

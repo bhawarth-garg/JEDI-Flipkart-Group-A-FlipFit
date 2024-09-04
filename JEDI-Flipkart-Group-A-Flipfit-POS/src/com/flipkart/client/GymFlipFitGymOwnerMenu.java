@@ -40,10 +40,12 @@ public class GymFlipFitGymOwnerMenu {
      */
     boolean gymOwnerLogin(String email, String password) {
         if (flipFitGymOwnerService.validateLogin(email, password)) {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDateTime = now.format(formatter);
-            System.out.println("Login Successful\n"+formattedDateTime);
+//            LocalDateTime now = LocalDateTime.now();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            String formattedDateTime = now.format(formatter);
+//            System.out.println("Login Successful\n"+formattedDateTime);
+            System.out.println("Login Successful\n");
+
             while (true) {
                 System.out.println("***********GYM OWNER MENU***********");
                 System.out.println("1. View all available gyms");
@@ -52,12 +54,14 @@ public class GymFlipFitGymOwnerMenu {
                 int y = Integer.parseInt(obj.nextLine());
 
                 switch (y) {
-                    case 2:
-                        addGym(email);
-                        break;
+
                     case 1:
                         displayGyms(email);
                         break;
+                    case 2:
+                        addGym(email);
+                        break;
+
                     case 3:
                         return true;
                 }
@@ -84,9 +88,11 @@ public class GymFlipFitGymOwnerMenu {
         flipFitGym.setLocation(location);
         flipFitGym.setGymName(gymName);
         flipFitGym.setStatus("unverified");
+
         List<FlipFitSlots> flipFitSlots = new ArrayList<>();
         System.out.println("\nHow many slots to be entered?");
         int slotNo = Integer.parseInt(obj.nextLine());
+
         int x = 1;
         while (slotNo != 0) {
             System.out.println("Add slot no. " + x++ + "\n");
