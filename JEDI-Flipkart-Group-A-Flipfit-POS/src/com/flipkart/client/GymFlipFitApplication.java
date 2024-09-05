@@ -1,13 +1,5 @@
 package com.flipkart.client;
-import com.flipkart.business.FlipFitGymOwnerService;
-import com.flipkart.business.FlipFitGymOwnerServiceOperation;
-import com.flipkart.business.FlipFitUserServiceOperations;
-import com.flipkart.business.FlipFitUserServices;
-//import com.flipkart.utils.DatabaseConnector;
 
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -15,17 +7,11 @@ import java.util.Scanner;
 public class GymFlipFitApplication {
     static GymFlipFitGymOwnerMenu owner = new GymFlipFitGymOwnerMenu();
     static GymFlipFitCustomerMenu customer = new GymFlipFitCustomerMenu();
-    static FlipFitGymOwnerService flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
 
-    static FlipFitUserServices userService = new FlipFitUserServiceOperations();
     static Scanner obj = new Scanner(System.in);
 
     static Properties pr = new Properties();
 
-    /*
-     * @main application
-     * @param args
-     */
 
 
     public static void main(String[] args) {
@@ -35,12 +21,10 @@ public class GymFlipFitApplication {
         boolean exitFlag = false;
         while(true) {
             System.out.println("================================");
-//            System.out.println("Press 1 for Registration");
             System.out.println("Press 1 for Login");
             System.out.println("Press 2 for Change Password");
             System.out.println("Press 3 for Gym Customer Registration");
             System.out.println("Press 4 for Gym Owner Registration");
-//            System.out.println("Press 3 for Update Password");
             System.out.println("Press 5 for Logout");
 
             int option= Integer.parseInt(obj.nextLine());
@@ -57,16 +41,7 @@ public class GymFlipFitApplication {
                         case "Admin" :
                             GymFlipFitAdminMenu admin = new GymFlipFitAdminMenu();
 
-//                            if(!admin.verifyAdminCredentials(userId,password)){
-//                                System.out.println("Invalid Credentials");
-//                                break;
-//                            }
-
                             boolean flag = true;
-//                            LocalDateTime now = LocalDateTime.now();
-//                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//                            String formattedDateTime = now.format(formatter);
-//                            System.out.println("Login Successful\n"+formattedDateTime);
                             System.out.println("Login Successful\n");
 
                             while(flag) {
@@ -159,17 +134,13 @@ public class GymFlipFitApplication {
                         case "Customer" :
                             if(!customer.validateUser(user,userPassword))
                                 System.out.println("Invalid credentials");
-                            else{
-                                userService.updateGymUserPassword(user,userPassword, updatedPassword);
-                            }
+
                             break;
                         case "GymOwner" :
                             if(!owner.verifyGymOwner(user,userPassword)){
                                 System.out.println("Invalid credentials");
                             }
-                            else{
-                                flipFitGymOwnerService.updateGymOwnerPassword(user,userPassword, updatedPassword);
-                            }
+
 
                             break;
                     }
@@ -182,15 +153,12 @@ public class GymFlipFitApplication {
                     break;
 
                 case 4 :
-
                     owner.createGymOwner();
                     System.out.println("Gym Owner Registration Successful");
-
                     break;
 
 
                 case 5 :
-                    //end
                     exitFlag = true;
                     System.out.println("Thank you for using FlipFit :)");
                     break;

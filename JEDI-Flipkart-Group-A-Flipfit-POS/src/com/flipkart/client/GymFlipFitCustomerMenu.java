@@ -1,37 +1,24 @@
 package com.flipkart.client;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
-
 import com.flipkart.bean.*;
-import com.flipkart.business.FlipFitUserServiceOperations;
-
-import java.util.ArrayList;
 import java.util.Scanner;
+
 /*
  * This class represents the customer menu for the GymFlipFit application
  * It provides various functions for customer actions such as viewing gyms, booking slots, and managing bookings.
  */
 public class GymFlipFitCustomerMenu {
     static Scanner obj = new Scanner(System.in);
-    FlipFitUserServiceOperations userServiceOperation = new FlipFitUserServiceOperations();
+//    FlipFitUserServiceOperations userServiceOperation = new FlipFitUserServiceOperations();
     FlipFitUser flipFitUser = new FlipFitUser();
-    /*
-     * perfom user login and display the customer menu
-     * @param username The username of the customer
-     * @param pass The password of the customer
-     * @return True if login is successful, false otherwise
-     */
+
 
 
     public boolean userLogin(String username, String pass) {
         if (validateUser(username, pass)) {
             boolean flag = true;
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDateTime = now.format(formatter);
-//            System.out.println("Login Successful\n"+formattedDateTime);
             System.out.println("Login Successful\n");
 
             while (flag) {
@@ -113,65 +100,32 @@ public class GymFlipFitCustomerMenu {
         }
     }
 
-    /*
-     *validate user credentials.
-     *@param username The username of the customer
-     *@param pass The password of the customer
-     *@return True if user credentials are valid, false otherwise
-     */
+
     public boolean validateUser(String username, String pass) {
-        return userServiceOperation.validateUser(username, pass);
+        return true;
     }
 
-    /*
-     *View all gyms with available slots
-     *@return list of gyms with available slots.
-     */
     List<FlipFitGym> viewAllGymswithSlots() {
         System.out.println("List of Gyms");
-        List<FlipFitGym> gymList = userServiceOperation.getAllGymsWithSlots();
+        List<FlipFitGym> gymList = Collections.<FlipFitGym>emptyList();
         return gymList;
     }
 
-    /*
-     * Book a slot for a specific gym
-     * @param gymId The Id of the gym
-     * @param time The slot time
-     * @param email The email of the user booking the slot
-     * @return True if the slot is booked successfully, false otherwise
-     */
+
     public boolean bookSlot(int gymId, int time, String email) {
-        return userServiceOperation.bookSlots(gymId, time, email);
+//        return userServiceOperation.bookSlots(gymId, time, email);
+        return true;
     }
 
-    /*
-     *Cancel a booked slot
-     *@param bookingId The ID of the booking to be cancelled.
-     */
+
     public void cancelSlot(int bookingId) {
         System.out.println("Slot Cancelled");
-        userServiceOperation.cancelSlots(bookingId);
     }
 
-    /*
-     *View all bookings of a specific user.
-     *@param userid The ID of the user.
-     *@return List of user's bookings.
-     */
+
     public List<FlipFitBookings> viewAllBookings(String userid) {
-        List<FlipFitBookings> myBookings = userServiceOperation.getAllBookings(userid);
+        List<FlipFitBookings> myBookings=  Collections.<FlipFitBookings>emptyList();
         return myBookings;
-    }
-
-    /*
-     *View all gyms in a specific area.
-     *@param location The location (area) to filter gyms
-     *@return List of gyms in the specified area.
-     */
-    List<FlipFitGym> viewAllGymsByArea(String location) {
-        System.out.println("List of Gyms");
-        List<FlipFitGym> gymList = userServiceOperation.getAllGymsByArea(location);
-        return gymList;
     }
 
     /*/
@@ -200,6 +154,6 @@ public class GymFlipFitCustomerMenu {
         flipFitUser.setUserName(ownerName);
         flipFitUser.setPhoneNumber(phoneNo);
 
-        userServiceOperation.createUser(flipFitUser);
+//        userServiceOperation.createUser(flipFitUser);
     }
 }
