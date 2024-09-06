@@ -3,16 +3,16 @@ package com.flipkart.bean;
 
 /* This class represents a FlipFit admin with adminId and password attributes. */
 public class FlipFitAdmin {
-    private int adminId; /* Stores the unique identifier for the admin. */
+    private String adminId; /* Stores the unique identifier for the admin. */
     private String password; /* Stores the password associated with the admin account. */
 
     /* Getter method for retrieving the adminId. */
-    public int getAdminId() {
+    public String getAdminId() {
         return adminId;
     }
 
     /* Setter method for setting the adminId. */
-    public void setAdminId(int adminId) {
+    public void setAdminId(String adminId) {
         this.adminId = adminId;
     }
 

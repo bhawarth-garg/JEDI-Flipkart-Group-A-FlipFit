@@ -4,7 +4,6 @@ package com.flipkart.business;
 
 public class FlipFitGymServiceOperations implements FlipFitGymServices{
 
-
     @Override
     public void createGym() {
         // TODO Auto-generated method stub

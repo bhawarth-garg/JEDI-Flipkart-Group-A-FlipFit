@@ -3,13 +3,13 @@ package com.flipkart.bean;
 
 public class FlipFitBookings {
     private int bookingId;
-    private int userId;
+    private String userId;
     private int createdAt;
-    private int bookingStatus;
+    private String bookingStatus;
     private int date;
     private int time;
-    private int slotId;
-    private int gymId;
+    private String slotId;
+    private String gymId;
     private String status;
 
     public int getDate() {
@@ -20,19 +20,19 @@ public class FlipFitBookings {
         this.date = date; // Sets the date of the booking.
     }
 
-    public int getSlotId() {
+    public String getSlotId() {
         return slotId; // Retrieves the ID of the time slot booked.
     }
 
-    public void setSlotId(int slotId) {
+    public void setSlotId(String slotId) {
         this.slotId = slotId; // Sets the ID of the time slot booked.
     }
 
-    public int getGymId() {
+    public String getGymId() {
         return gymId; // Retrieves the ID of the gym where the booking is made.
     }
 
-    public void setGymId(int gymId) {
+    public void setGymId(String gymId) {
         this.gymId = gymId; // Sets the ID of the gym where the booking is made.
     }
 
@@ -60,11 +60,11 @@ public class FlipFitBookings {
         this.bookingId = bookingId; // Sets the bookingId.
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId; // Retrieves the userId associated with the booking.
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId; // Sets the userId associated with the booking.
     }
 
@@ -76,11 +76,11 @@ public class FlipFitBookings {
         this.createdAt = createdAt; // Sets the timestamp when the booking was created.
     }
 
-    public int getBookingStatus() {
+    public String getBookingStatus() {
         return bookingStatus; // Retrieves the status of the booking.
     }
 
-    public void setBookingStatus(int bookingStatus) {
+    public void setBookingStatus(String bookingStatus) {
         this.bookingStatus = bookingStatus; // Sets the status of the booking.
     }
 }

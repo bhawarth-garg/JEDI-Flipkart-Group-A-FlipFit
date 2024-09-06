@@ -10,7 +10,8 @@ import java.util.List;
  */
 public interface FlipFitAdminService {
 
-
+    public void CreateLists();
+    public void Create();
     public void viewGymOwners();
 
 
@@ -19,10 +20,11 @@ public interface FlipFitAdminService {
     public void viewUsers();
 
 
-    public void verifyGym(int gymId);
+    public void verifyGym(String gymId);
+    public boolean validateAdmin(String Id, String pass);
 
 
-    public void verifyGymOwner(int gymOwnerId);
+    public void verifyGymOwner(String gymOwnerId);
 
     public List<FlipFitGymOwner> getUnverifiedGymOwners();
 

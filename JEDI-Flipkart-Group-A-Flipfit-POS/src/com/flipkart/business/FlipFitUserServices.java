@@ -10,7 +10,7 @@ import com.flipkart.bean.FlipFitUser;
  */
 public interface FlipFitUserServices {
 
-
+    void CreateInstance();
     boolean cancelSlots(int slotId);
 
 
@@ -20,10 +20,10 @@ public interface FlipFitUserServices {
     List<FlipFitGym> getAllGymsWithSlots();
 
 
-    List<FlipFitGym> getAllGymsByArea(String area);
+//    List<FlipFitGym> getAllGymsByArea(String area);
 
 
-    boolean bookSlots(int gymId, int time, String email);
+    boolean bookSlots(String gymId, int time, String email);
 
 
     boolean validateUser(String username, String pass);
@@ -32,7 +32,7 @@ public interface FlipFitUserServices {
     void createUser(FlipFitUser flipFitUser);
 
 
-    boolean verifyGymUserPassword(String email, String password, String updatedPassword);
+//    boolean verifyGymUserPassword(String email, String password, String updatedPassword);
 
 
     void updateGymUserPassword(String email, String password, String updatedPassword);

@@ -1,65 +1,106 @@
 
 package com.flipkart.business;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+
 import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.FlipFitGymOwner;
-import com.flipkart.dao.FlipfitGymOwnerDAOImpl;
-import com.flipkart.dao.FlipFitGymOwnerDAOInterface;
-import com.flipkart.dao.UpdatePasswordDAOImpl;
-import com.flipkart.dao.UpdatePasswordDAOInterface;
+//import com.flipkart.dao.FlipfitGymOwnerDAOImpl;
+//import com.flipkart.dao.FlipFitGymOwnerDAOInterface;
+//import com.flipkart.dao.UpdatePasswordDAOImpl;
+//import com.flipkart.dao.UpdatePasswordDAOInterface;
 
 /**
  * Implementation of FlipFitGymOwnerService for managing gym owners.
  */
 public class FlipFitGymOwnerServiceOperation implements FlipFitGymOwnerService {
 
-    // HashMap to store gym owners
-    HashMap<String, FlipFitGymOwner> flipFitGymOwners = new HashMap<>();
 
-    // DAO interface for gym owner operations
-    FlipFitGymOwnerDAOInterface flipFitGymOwnerDAOInterface = new FlipfitGymOwnerDAOImpl();
+    ArrayList<FlipFitGymOwner> GymOwners;
+    ArrayList<FlipFitGym> Gyms;
+    // HashMap to store gym owners
+    HashMap<String, FlipFitGym> GymsOwnedByFlipFitGymOwner ;
 
     // Scanner object for user input
     Scanner obj = new Scanner(System.in);
 
-    // DAO interface for password update operations
-    UpdatePasswordDAOInterface updatePasswordInterface = new UpdatePasswordDAOImpl();
+    int id; // ID tracker (not used in current implementation)
 
-    int id = 0; // ID tracker (not used in current implementation)
+    public void CreateLists()
+    {
+        System.out.println("Gym Owner Instance Created");
+        GymOwners= new ArrayList<FlipFitGymOwner>();
+        Gyms= new ArrayList<FlipFitGym>();
+        // HashMap to store gym owners
+        GymsOwnedByFlipFitGymOwner = new HashMap<>();
 
+        id = 0; // ID tracker (not used in current implementation)
+    }
     @Override
     public void addGymWithSlots(FlipFitGym flipFitGym) {
-        flipFitGymOwnerDAOInterface.addGym(flipFitGym); // Delegate to DAO to add gym with slots
+        Gyms.add(flipFitGym);
+        for(FlipFitGymOwner owner: GymOwners)
+        {
+            if(Objects.equals(owner.getOwnerId(), flipFitGym.getOwnerId()))
+            {
+                List<FlipFitGym> OwnerSpecific= owner.getGyms();
+                OwnerSpecific.add(flipFitGym);
+                owner.setGyms(OwnerSpecific);
+            }
+        }
+
     }
 
     @Override
-    public List<FlipFitGym> viewMyGyms(String userId) {
-        return flipFitGymOwnerDAOInterface.viewGymSlots(userId); // Delegate to DAO to view gyms for a user
+    public List<FlipFitGym> viewMyGyms(String ownerId) {
+
+        for(FlipFitGymOwner owner: GymOwners)
+        {
+            if(Objects.equals(owner.getOwnerId(), ownerId))
+            {
+                return owner.getGyms();
+            }
+        }
+
+        return Collections.emptyList();
+
     }
 
     @Override
     public boolean validateLogin(String email, String password) {
-        return updatePasswordInterface.verifyGymUserPassword(email, password); // Delegate to DAO to validate login
-//		if(gymOwnerDaoInterface.validateLogin(email,password)) return true;
-//      return false;
+        for(FlipFitGymOwner owner: GymOwners)
+        {
+            if(Objects.equals(owner.getOwnerId(), email) && Objects.equals(owner.getPassword(), password))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void createGymOwner(FlipFitGymOwner flipFitGymOwner) {
-        flipFitGymOwnerDAOInterface.newGymOwner(flipFitGymOwner); // Delegate to DAO to create a new gym owner
+        GymOwners.add(flipFitGymOwner);
     }
 
     @Override
     public boolean verifyGymOwnerPassword(String email, String password) {
-        return updatePasswordInterface.verifyGymUserPassword(email, password); // Delegate to DAO to verify gym owner's password
+
+        return true;
+
     }
 
     @Override
     public void updateGymOwnerPassword(String email, String password, String updatedPassword) {
-        updatePasswordInterface.updateGymOwnerPassword(email, password, updatedPassword); // Delegate to DAO to update gym owner's password
+
+        for(FlipFitGymOwner owner: GymOwners)
+        {
+            if(Objects.equals(owner.getOwnerId(), email) && Objects.equals(owner.getPassword(), password))
+            {
+                owner.setPassword(updatedPassword);
+            }
+        }
+
     }
 
 }

@@ -4,7 +4,7 @@ package com.flipkart.bean;
 import java.util.List;
 
 public class FlipFitGymOwner {
-    private int ownerId;
+    private String ownerId;
     private String ownerEmail;
     private String password;
     private String phoneNo;
@@ -16,11 +16,11 @@ public class FlipFitGymOwner {
     private String status;
     private String verificationStatus;
 
-    public int getOwnerId() {
+    public String getOwnerId() {
         return ownerId; // Retrieves the unique identifier for the gym owner
     }
 
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId; // Sets the unique identifier for the gym owner
     }
 

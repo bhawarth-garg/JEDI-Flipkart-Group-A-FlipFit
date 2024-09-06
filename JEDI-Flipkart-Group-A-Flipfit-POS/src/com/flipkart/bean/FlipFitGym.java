@@ -4,7 +4,7 @@ package com.flipkart.bean;
 import java.util.List;
 
 public class FlipFitGym {
-    private int gymId;
+    private String gymId;
     private String gymName;
     private String gymAddress;
     private String location;
@@ -36,11 +36,11 @@ public class FlipFitGym {
         this.flipFitSlots = flipFitSlots; // Sets the list of slots available in the gym.
     }
 
-    public int getGymId() {
+    public String getGymId() {
         return gymId; // Retrieves the gym ID.
     }
 
-    public void setGymId(int gymId) {
+    public void setGymId(String gymId) {
         this.gymId = gymId; // Sets the gym ID.
     }
 

@@ -1,8 +1,5 @@
 package com.flipkart.client;
-import com.flipkart.business.FlipFitGymOwnerService;
-import com.flipkart.business.FlipFitGymOwnerServiceOperation;
-import com.flipkart.business.FlipFitUserServiceOperations;
-import com.flipkart.business.FlipFitUserServices;
+import com.flipkart.business.*;
 //import com.flipkart.utils.DatabaseConnector;
 
 import java.io.InputStream;
@@ -15,17 +12,15 @@ import java.util.Scanner;
 public class GymFlipFitApplication {
     static GymFlipFitGymOwnerMenu owner = new GymFlipFitGymOwnerMenu();
     static GymFlipFitCustomerMenu customer = new GymFlipFitCustomerMenu();
+    static GymFlipFitAdminMenu admin = new GymFlipFitAdminMenu();
     static FlipFitGymOwnerService flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
+    static FlipFitAdminServiceOperation flipFitAdminService = new FlipFitAdminServiceOperation();
 
     static FlipFitUserServices userService = new FlipFitUserServiceOperations();
     static Scanner obj = new Scanner(System.in);
 
     static Properties pr = new Properties();
 
-    /*
-     * @main application
-     * @param args
-     */
 
 
     public static void main(String[] args) {
@@ -33,6 +28,10 @@ public class GymFlipFitApplication {
         System.out.println("        Welcome to the FlipFit Application!!");
         System.out.println("************************************************************");
         boolean exitFlag = false;
+        customer.CreateInstance();
+        admin.CreateInstance();
+
+        owner.CreateInstance();
         while(true) {
             System.out.println("================================");
 //            System.out.println("Press 1 for Registration");
@@ -53,21 +52,20 @@ public class GymFlipFitApplication {
                     System.out.println("Enter role (Admin/Customer/GymOwner)");
                     String role = obj.nextLine();
 
+
                     switch (role) {
                         case "Admin" :
-                            GymFlipFitAdminMenu admin = new GymFlipFitAdminMenu();
 
-//                            if(!admin.verifyAdminCredentials(userId,password)){
-//                                System.out.println("Invalid Credentials");
-//                                break;
-//                            }
+                            if(!admin.verifyAdminCredentials(userId,password)){
+                                System.out.println("Invalid Credentials");
+                                break;
+                            }
 
                             boolean flag = true;
-//                            LocalDateTime now = LocalDateTime.now();
-//                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//                            String formattedDateTime = now.format(formatter);
-//                            System.out.println("Login Successful\n"+formattedDateTime);
-                            System.out.println("Login Successful\n");
+                            LocalDateTime now = LocalDateTime.now();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            String formattedDateTime = now.format(formatter);
+                            System.out.println("Login Successful\n"+formattedDateTime);
 
                             while(flag) {
 
@@ -93,13 +91,13 @@ public class GymFlipFitApplication {
                                         admin.viewGymOwners();
                                         break;
                                     case 4:
-                                        System.out.println("Enter the Gym Id to be verified ");
-                                        int id1 = Integer.parseInt(obj.nextLine());
+                                        System.out.println("Enter the Gym name to be verified ");
+                                        String id1 = obj.nextLine();
                                         admin.verifyGym(id1);
                                         break;
                                     case 5:
                                         System.out.println("Enter the Gym Owner Id to be verified ");
-                                        int id2 = Integer.parseInt(obj.nextLine());
+                                        String id2 = obj.nextLine();
                                         admin.verifyGymOwner(id2);
                                         break;
                                     case 6:
@@ -117,8 +115,6 @@ public class GymFlipFitApplication {
                             break;
 
                         case "Customer" :
-
-//                            GymFlipFitCustomerMenu customer = new GymFlipFitCustomerMenu();
                             if(!customer.userLogin(userId,password))
                                 System.out.println("Invalid credentials");
 
@@ -128,7 +124,6 @@ public class GymFlipFitApplication {
 
 
                         case "GymOwner" :
-//                            GymFlipFitGymOwnerMenu owner= new GymFlipFitGymOwnerMenu();
                             if(!owner.gymOwnerLogin(userId,password)){
                                 System.out.println("Invalid credentials");
                             }

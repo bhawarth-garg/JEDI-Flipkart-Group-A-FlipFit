@@ -9,7 +9,7 @@ import com.flipkart.bean.FlipFitGymOwner;
  */
 public interface FlipFitGymOwnerService {
 
-
+    void CreateLists();
     void addGymWithSlots(FlipFitGym flipFitGym);
 
     List<FlipFitGym> viewMyGyms(String userId);

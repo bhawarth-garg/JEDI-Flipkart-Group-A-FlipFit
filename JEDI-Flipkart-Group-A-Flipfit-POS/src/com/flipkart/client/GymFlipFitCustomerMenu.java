@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.flipkart.bean.*;
+import com.flipkart.business.FlipFitAdminServiceOperation;
 import com.flipkart.business.FlipFitUserServiceOperations;
 
 import java.util.ArrayList;
@@ -15,24 +16,23 @@ import java.util.Scanner;
  */
 public class GymFlipFitCustomerMenu {
     static Scanner obj = new Scanner(System.in);
-    FlipFitUserServiceOperations userServiceOperation = new FlipFitUserServiceOperations();
-    FlipFitUser flipFitUser = new FlipFitUser();
-    /*
-     * perfom user login and display the customer menu
-     * @param username The username of the customer
-     * @param pass The password of the customer
-     * @return True if login is successful, false otherwise
-     */
+    FlipFitUserServiceOperations userServiceOperation;
+//    FlipFitUser flipFitUser = new FlipFitUser();
 
 
+
+    public void CreateInstance()
+    {
+        userServiceOperation = new FlipFitUserServiceOperations();
+        userServiceOperation.CreateInstance();
+    }
     public boolean userLogin(String username, String pass) {
         if (validateUser(username, pass)) {
             boolean flag = true;
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDateTime = now.format(formatter);
-//            System.out.println("Login Successful\n"+formattedDateTime);
-            System.out.println("Login Successful\n");
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter);
+            System.out.println("Login Successful\n"+formattedDateTime);
 
             while (flag) {
                 System.out.println("*********CUSTOMER MENU*********\n");
@@ -49,7 +49,7 @@ public class GymFlipFitCustomerMenu {
                         printGyms(gyms1);
                         System.out.println("Enter the following:");
                         System.out.println("Gym ID");
-                        int gymId = Integer.parseInt(obj.nextLine());
+                        String gymId = obj.nextLine();
                         System.out.println("Slot Time");
                         int time = Integer.parseInt(obj.nextLine());
 
@@ -129,8 +129,8 @@ public class GymFlipFitCustomerMenu {
      */
     List<FlipFitGym> viewAllGymswithSlots() {
         System.out.println("List of Gyms");
-        List<FlipFitGym> gymList = userServiceOperation.getAllGymsWithSlots();
-        return gymList;
+        List<FlipFitGym> gymListwithAvailableSlots = userServiceOperation.getAllGymsWithSlots();
+        return gymListwithAvailableSlots;
     }
 
     /*
@@ -140,7 +140,7 @@ public class GymFlipFitCustomerMenu {
      * @param email The email of the user booking the slot
      * @return True if the slot is booked successfully, false otherwise
      */
-    public boolean bookSlot(int gymId, int time, String email) {
+    public boolean bookSlot(String gymId, int time, String email) {
         return userServiceOperation.bookSlots(gymId, time, email);
     }
 
@@ -149,8 +149,14 @@ public class GymFlipFitCustomerMenu {
      *@param bookingId The ID of the booking to be cancelled.
      */
     public void cancelSlot(int bookingId) {
-        System.out.println("Slot Cancelled");
-        userServiceOperation.cancelSlots(bookingId);
+
+        if(userServiceOperation.cancelSlots(bookingId))
+        {
+            System.out.println("Selected Slot Cancelled");
+        }
+        else {
+            System.out.println("No such Slot found");
+        }
     }
 
     /*
@@ -163,16 +169,16 @@ public class GymFlipFitCustomerMenu {
         return myBookings;
     }
 
-    /*
-     *View all gyms in a specific area.
-     *@param location The location (area) to filter gyms
-     *@return List of gyms in the specified area.
-     */
-    List<FlipFitGym> viewAllGymsByArea(String location) {
-        System.out.println("List of Gyms");
-        List<FlipFitGym> gymList = userServiceOperation.getAllGymsByArea(location);
-        return gymList;
-    }
+//    /*
+//     *View all gyms in a specific area.
+//     *@param location The location (area) to filter gyms
+//     *@return List of gyms in the specified area.
+//     */
+//    List<FlipFitGym> viewAllGymsByArea(String location) {
+//        System.out.println("List of Gyms");
+//        List<FlipFitGym> gymList = userServiceOperation.getAllGymsByArea(location);
+//        return gymList;
+//    }
 
     /*/
      * Create a new customer user.
@@ -180,24 +186,24 @@ public class GymFlipFitCustomerMenu {
     public void createCustomer() {
         System.out.println("Enter the following info:");
         System.out.println("\nYour email: ");
-        String ownerEmail = obj.nextLine();
+        String customerEmail = obj.nextLine();
         System.out.println("\nYour name: ");
-        String ownerName = obj.nextLine();
+        String customerName = obj.nextLine();
         System.out.println("\nEnter a password: ");
         String password = obj.nextLine();
         System.out.println("\nPhone number: ");
         String phoneNo = obj.nextLine();
         System.out.println("\nEnter Address ");
-        String nationalId = obj.nextLine();
+        String address = obj.nextLine();
         System.out.println("\nLocation: ");
-        String GST = obj.nextLine();
+        String Location = obj.nextLine();
 
         FlipFitUser flipFitUser = new FlipFitUser();
-        flipFitUser.setEmail(ownerEmail);
-        flipFitUser.setAddress(nationalId);
-        flipFitUser.setLocation(GST);
+        flipFitUser.setEmail(customerEmail);
+        flipFitUser.setAddress(address);
+        flipFitUser.setLocation(Location);
         flipFitUser.setPassword(password);
-        flipFitUser.setUserName(ownerName);
+        flipFitUser.setUserName(customerName);
         flipFitUser.setPhoneNumber(phoneNo);
 
         userServiceOperation.createUser(flipFitUser);
