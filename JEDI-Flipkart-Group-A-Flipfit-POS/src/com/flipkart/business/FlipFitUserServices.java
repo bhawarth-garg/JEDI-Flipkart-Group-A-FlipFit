@@ -20,9 +20,6 @@ public interface FlipFitUserServices {
     List<FlipFitGym> getAllGymsWithSlots();
 
 
-    List<FlipFitGym> getAllGymsByArea(String area);
-
-
     boolean bookSlots(int gymId, int time, String email);
 
 

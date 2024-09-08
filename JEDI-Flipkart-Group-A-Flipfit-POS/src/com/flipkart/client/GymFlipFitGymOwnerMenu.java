@@ -6,12 +6,9 @@ import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.FlipFitGymOwner;
 import com.flipkart.bean.FlipFitSlots;
 import com.flipkart.business.FlipFitGymOwnerService;
-import com.flipkart.business.FlipFitGymOwnerServiceOperation;
-
-import java.net.StandardSocketOptions;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import com.flipkart.business.FlipFitGymOwnerServiceOperation;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 /*
@@ -20,30 +17,17 @@ import java.util.Scanner;
  */
 public class GymFlipFitGymOwnerMenu {
 
-    FlipFitGymOwnerService flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
+//    FlipFitGymOwnerService flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
     static Scanner obj = new Scanner(System.in);
 
-    /*
-     * Verify the gym owner's login credentials.
-     * @param email The email id of the gym owner.
-     * @param password The password of the gym owner.
-     * @return True If login is successful, false otherwise.
-     */
+
     boolean verifyGymOwner(String email, String password) {
-        return flipFitGymOwnerService.validateLogin(email, password);
+       return true;
     }
 
-    /*
-     * Perform gym owner login and display the gym owner menu.
-     * @param password The password of the gym owner.
-     * @return true if login is successful, false otherwise.
-     */
+
     boolean gymOwnerLogin(String email, String password) {
-        if (flipFitGymOwnerService.validateLogin(email, password)) {
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDateTime = now.format(formatter);
-//            System.out.println("Login Successful\n"+formattedDateTime);
+
             System.out.println("Login Successful\n");
 
             while (true) {
@@ -66,7 +50,6 @@ public class GymFlipFitGymOwnerMenu {
                         return true;
                 }
             }
-        } else return false;
     }
 
     /*
@@ -106,8 +89,6 @@ public class GymFlipFitGymOwnerMenu {
         }
         flipFitGym.setSlots(flipFitSlots);
         flipFitGym.setOwnerId(userId);
-
-        flipFitGymOwnerService.addGymWithSlots(flipFitGym);
     }
 
     /*
@@ -123,14 +104,7 @@ public class GymFlipFitGymOwnerMenu {
         String password = obj.nextLine();
         System.out.println("\nPhone number: ");
         String phoneNo = obj.nextLine();
-        System.out.println("\nNation ID/ Aadhaar Number: ");
-        String nationalId = obj.nextLine();
-        if (nationalId.length() != 12) {
-            System.out.println("Invalid Adhaar No. Enter a valid adhaar!");
-            return;
-        }
-        System.out.println("\nGST: ");
-        String GST = obj.nextLine();
+
         System.out.println("\nPAN Details: ");
         String PAN = obj.nextLine();
         if (PAN.length() != 10) {
@@ -143,14 +117,12 @@ public class GymFlipFitGymOwnerMenu {
         flipFitGymOwner.setOwnerEmail(ownerEmail);
         flipFitGymOwner.setPAN(PAN);
         flipFitGymOwner.setOwnerName(ownerName);
-        flipFitGymOwner.setGST(GST);
         flipFitGymOwner.setPassword(password);
-        flipFitGymOwner.setNationalId(nationalId);
         flipFitGymOwner.setPhoneNo(phoneNo);
         flipFitGymOwner.setGyms(emptyGymList);
         flipFitGymOwner.setStatus("verified");
 
-        flipFitGymOwnerService.createGymOwner(flipFitGymOwner);
+//        flipFitGymOwnerService.createGymOwner(flipFitGymOwner);
     }
 
     /*
@@ -158,7 +130,7 @@ public class GymFlipFitGymOwnerMenu {
      * @param userId The ID of the gym owner.
      */
     void displayGyms(String userId) {
-        List<FlipFitGym> gymsList = flipFitGymOwnerService.viewMyGyms(userId);
+        List<FlipFitGym> gymsList = Collections.<FlipFitGym>emptyList();
         int x = 1;
         for (FlipFitGym flipFitGym : gymsList) {
             System.out.println("Gym " + x + ": Name " + flipFitGym.getGymName() + "     Address: " + flipFitGym.getGymAddress() + "       Location: " + flipFitGym.getLocation());
