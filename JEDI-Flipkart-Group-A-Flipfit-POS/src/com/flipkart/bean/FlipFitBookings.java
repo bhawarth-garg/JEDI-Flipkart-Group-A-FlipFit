@@ -11,6 +11,17 @@ public class FlipFitBookings {
     private int slotId;
     private int gymId;
     private String status;
+    private String UserEmail;
+
+    public String getUserEmail() {
+        return UserEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        UserEmail = userEmail;
+    }
+
+
 
     public int getDate() {
         return date; // Retrieves the date of the booking.

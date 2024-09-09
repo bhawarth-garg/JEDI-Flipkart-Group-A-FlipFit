@@ -30,7 +30,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<FlipFitGym> flipFitGyms = new ArrayList<>();
+        List<FlipFitGym> flipFitGyms = new ArrayList<FlipFitGym>();
 
         try {
             String sqlQuery = "SELECT * FROM gyms";
@@ -67,6 +67,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         }
         return flipFitGyms;
     }
+
     public void AddCard(String UserEmail, String CardNumber, int cvv, String Exp ) {
         conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
@@ -90,14 +91,14 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<FlipFitPayment> flipFitPayments = new ArrayList<>();
-        String viewCardQuery = "SELECT id, cardNumber, cvv, exp FROM payment where userId=?";
+        String viewCardQuery = "SELECT CardId, cardNumber, cvv, exp FROM payment where userId=?";
         try {
             preparedStatement = conn.prepareStatement(viewCardQuery);
             preparedStatement.setString(1, userEmail);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("CardId");
                 String number = resultSet.getString("cardNumber");
                 int cvv = resultSet.getInt("cvv");
                 String exp = resultSet.getString("exp");
@@ -115,7 +116,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         }
 
         for (FlipFitPayment card : flipFitPayments) {
-            System.out.println("Card ID: " + card.getId() + " Card Number: " + card.getCardNumber() + " CVV: " + card.getCvv() + " Expiry: " + card.getExp() );
+            System.out.println("Card ID: " + card.getCardId() + " Card Number: " + card.getCardNumber() + " CVV: " + card.getCvv() + " Expiry: " + card.getExp() );
         }
 
 
@@ -123,9 +124,51 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
     }
 
 
+    public boolean IsSlotAlreadyRegistered(String email, int time, int GymId)
+    {
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<FlipFitBookings> bookings = new ArrayList<>();
+        String ViewBookingQuery=  "SELECT userID, time, gymId FROM Booking where UserEmail=?";
+        try {
+            preparedStatement = conn.prepareStatement(ViewBookingQuery);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int UserId = resultSet.getInt("userID");
+                int slot_time = resultSet.getInt("time");
+                int gym_id  = resultSet.getInt("gymId");
+
+                FlipFitBookings flipFitbooking = new FlipFitBookings();
+                flipFitbooking.setUserId(UserId);
+                flipFitbooking.setTime(slot_time);
+                flipFitbooking.setGymId(gym_id);
+                bookings.add(flipFitbooking);
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (FlipFitBookings booking: bookings) {
+            if (booking.getTime() == time && booking.getGymId() == GymId)
+                return true;
+        }
+
+            return false;
+
+    }
+
     @Override
     public boolean bookSlot(int gymId, int time, String email) {
         conn = DatabaseConnector.getConnection();
+        if(IsSlotAlreadyRegistered(email, time, gymId))
+        {
+            System.out.println("Selected Slot already booked by same user");
+            return false;
+        }
         System.out.println("Press1 to view all saved cards:");
         System.out.println("Press2 to add new Card: ");
 
@@ -161,7 +204,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         int cardID= Integer.parseInt(obj.nextLine());
 
         PreparedStatement preparedStatement = null;
-        String insertQuery = "INSERT INTO Booking (userId, status, date, time, slotId, GymId ) VALUES(?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO Booking (status, date, time, slotId, GymId, UserEmail ) VALUES(?,?,?,?,?,?)";
 
         try {
             // Check if slots are available
@@ -171,12 +214,13 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
             }
 
             preparedStatement = conn.prepareStatement(insertQuery);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, "CONFIRMED");
-            preparedStatement.setInt(3, 11); // Assuming date is fixed for this example
+
+            preparedStatement.setString(1, "CONFIRMED");
+            preparedStatement.setInt(2, 11); // Assuming date is fixed for this example
+            preparedStatement.setInt(3, time);
             preparedStatement.setInt(4, time);
-            preparedStatement.setInt(5, time);
-            preparedStatement.setInt(6, gymId);
+            preparedStatement.setInt(5, gymId);
+            preparedStatement.setString(6, email);
 
             int rowsInserted = preparedStatement.executeUpdate();
 
@@ -324,12 +368,51 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         return false;
     }
 
+
+    public boolean IsUserAlreadyRegistered(String UserEmail, String Phone)
+    {
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<FlipFitUser> user = new ArrayList<>();
+        String ViewUserQuery=  "SELECT * FROM User where email=? OR phoneNumber=?";
+        try {
+            preparedStatement = conn.prepareStatement(ViewUserQuery);
+            preparedStatement.setString(1, UserEmail);
+            preparedStatement.setString(2, Phone);
+            resultSet = preparedStatement.executeQuery();
+
+           if(resultSet.next())
+               return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            // Close resources in the finally block to avoid resource leaks
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println(e); // Handle closing exceptions
+            }
+        }
+
+        return false;
+
+    }
+
     @Override
     public void createUser(FlipFitUser flipFitUser) {
         conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
+
+            if(IsUserAlreadyRegistered(flipFitUser.getEmail(), flipFitUser.getPhoneNumber()))
+            {
+                System.out.println("Already Registered User");
+                return;
+            }
             System.out.println(flipFitUser.toString());
             String insertQuery = "INSERT INTO User (userName, email, password, phoneNumber, Address, location) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";

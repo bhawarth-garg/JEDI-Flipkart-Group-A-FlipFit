@@ -61,7 +61,7 @@ public class FlipFitAdminDAOImpl implements FlipFitAdminDAOInterface {
      */
     @Override
     public void viewUsers() {
-        Connection conn = null;
+        conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             conn = DatabaseConnector.getConnection();
@@ -95,7 +95,7 @@ public class FlipFitAdminDAOImpl implements FlipFitAdminDAOInterface {
      */
     @Override
     public void viewGymOwners() {
-        Connection conn = null;
+        conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             conn = DatabaseConnector.getConnection();
@@ -103,7 +103,7 @@ public class FlipFitAdminDAOImpl implements FlipFitAdminDAOInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("ownerId");
+                int id = resultSet.getInt("Id");
                 String phoneNo = resultSet.getString("phone_number");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");

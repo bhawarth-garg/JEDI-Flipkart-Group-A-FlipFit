@@ -20,12 +20,57 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.sound.sampled.FloatControl.Type.PAN;
+
 public class FlipFitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
     Connection conn;
 
     DatabaseConnector connector;
+
+
+    public boolean IsGymAlreadyRegistered(String GymName, String GymAddress)
+    {
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String ViewGymQuery=  "SELECT * FROM gyms where gymName=? AND gymAddress=?";
+        try {
+            preparedStatement = conn.prepareStatement(ViewGymQuery);
+            preparedStatement.setString(1, GymName);
+            preparedStatement.setString(2, GymAddress);
+
+            resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet);
+
+            if(resultSet.next())
+                return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            // Close resources in the finally block to avoid resource leaks
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println(e);// Handle closing exceptions
+            }
+        }
+
+        return false;
+
+    }
+
     @Override
     public void addGym(FlipFitGym flipFitGym){
+
+        if(IsGymAlreadyRegistered(flipFitGym.getGymName(), flipFitGym.getGymAddress()))
+        {
+            System.out.println("Gym Already Registered");
+            return;
+
+        }
+
         conn = DatabaseConnector.getConnection();
         Statement statement = null;
         ResultSet resultSet = null;
@@ -71,8 +116,56 @@ public class FlipFitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
 
     }
 
+
+    public boolean IsGymOwnerAlreadyRegistered(String OwnerEmail, String Phone, String PAN, String GST, String Aadhar)
+    {
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String ViewUserQuery=  "SELECT * FROM gym_owner where email=? OR phone_number=? OR pancard=? OR aadhar=? OR gst=?";
+        try {
+            preparedStatement = conn.prepareStatement(ViewUserQuery);
+            preparedStatement.setString(1, OwnerEmail);
+            preparedStatement.setString(2, Phone);
+            preparedStatement.setString(3, PAN);
+            preparedStatement.setString(4, Aadhar);
+            preparedStatement.setString(5, GST);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next())
+                return true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            // Close resources in the finally block to avoid resource leaks
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException e) {
+                System.out.println(e); // Handle closing exceptions
+            }
+        }
+
+        return false;
+
+    }
+
     @Override
     public void newGymOwner(FlipFitGymOwner flipFitGymOwner) {
+
+
+        String email= flipFitGymOwner.getOwnerEmail();
+        String Phone= flipFitGymOwner.getPhoneNo();
+        String pan= flipFitGymOwner.getPAN();
+        String gst= flipFitGymOwner.getGST();
+        String Aadhar= flipFitGymOwner.getNationalId();
+
+        if(IsGymOwnerAlreadyRegistered(email, Phone, pan, gst, Aadhar))
+        {
+            System.out.println("Gym Owner Already Registered.");
+            return;
+        }
         Statement statement = null;
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
@@ -85,13 +178,13 @@ public class FlipFitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
 
             // 5. Set values for the placeholders in the prepared statement
 
-            preparedStatement.setString(1, flipFitGymOwner.getOwnerEmail());
+            preparedStatement.setString(1, email);
             preparedStatement.setString(2, flipFitGymOwner.getOwnerName());
             preparedStatement.setString(3, flipFitGymOwner.getPassword());
-            preparedStatement.setString(4, flipFitGymOwner.getPhoneNo());
-            preparedStatement.setString(5, flipFitGymOwner.getPAN());
-            preparedStatement.setString(6, flipFitGymOwner.getGST());
-            preparedStatement.setString(7,flipFitGymOwner.getNationalId());
+            preparedStatement.setString(4, Phone);
+            preparedStatement.setString(5, pan);
+            preparedStatement.setString(6, Aadhar);
+            preparedStatement.setString(7, gst);
             preparedStatement.setString(8, flipFitGymOwner.getStatus());
 
             int rowsInserted = preparedStatement.executeUpdate();

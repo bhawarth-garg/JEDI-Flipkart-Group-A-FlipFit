@@ -1,7 +1,7 @@
 package com.flipkart.bean;
 
 public class FlipFitPayment {
-    private int id;
+    private int CardId;
     private String userId;
     private String cardNumber;
     private int cvv;
@@ -39,12 +39,12 @@ public class FlipFitPayment {
         this.userId = userId;
     }
 
-    public int getId() {
-        return id;
+    public int getCardId() {
+        return CardId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.CardId = id;
     }
 
 }
