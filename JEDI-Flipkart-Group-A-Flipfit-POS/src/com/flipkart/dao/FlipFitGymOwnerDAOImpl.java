@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlipfitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
+public class FlipFitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
     Connection conn;
 
     DatabaseConnector connector;

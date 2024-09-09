@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import com.flipkart.bean.FlipFitGym;
 import com.flipkart.bean.FlipFitGymOwner;
-import com.flipkart.dao.FlipfitGymOwnerDAOImpl;
+import com.flipkart.dao.FlipFitGymOwnerDAOImpl;
 import com.flipkart.dao.FlipFitGymOwnerDAOInterface;
 import com.flipkart.dao.UpdatePasswordDAOImpl;
 import com.flipkart.dao.UpdatePasswordDAOInterface;
@@ -20,7 +20,7 @@ public class FlipFitGymOwnerServiceOperation implements FlipFitGymOwnerService {
     HashMap<String, FlipFitGymOwner> flipFitGymOwners = new HashMap<>();
 
     // DAO interface for gym owner operations
-    FlipFitGymOwnerDAOInterface flipFitGymOwnerDAOInterface = new FlipfitGymOwnerDAOImpl();
+    FlipFitGymOwnerDAOInterface flipFitGymOwnerDAOInterface = new FlipFitGymOwnerDAOImpl();
 
     // Scanner object for user input
     Scanner obj = new Scanner(System.in);
