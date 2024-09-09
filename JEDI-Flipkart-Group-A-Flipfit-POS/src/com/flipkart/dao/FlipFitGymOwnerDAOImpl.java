@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlipfitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
+public class FlipFitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
     Connection conn;
 
     DatabaseConnector connector;
@@ -97,9 +97,9 @@ public class FlipfitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
             int rowsInserted = preparedStatement.executeUpdate();
 
             if (rowsInserted > 0) {
-            	 LocalDateTime now = LocalDateTime.now();
-                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                 String formattedDateTime = now.format(formatter);
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDateTime = now.format(formatter);
                 System.out.println("Gym Owner registered successfully!\n"+formattedDateTime);
             } else {
                 throw new RegistrationFailedException();

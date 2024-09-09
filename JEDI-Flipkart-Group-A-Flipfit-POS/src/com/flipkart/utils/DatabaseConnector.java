@@ -18,7 +18,7 @@ public class DatabaseConnector {
             } else {
                 try {
                     Properties prop = new Properties(); // Properties is used to read files
-                    InputStream inputStream = DatabaseConnector.class.getClassLoader().getResourceAsStream("src/config.properties");
+                    InputStream inputStream = DatabaseConnector.class.getClassLoader().getResourceAsStream("./config.properties");
                     prop.load(inputStream);
                     String driver = prop.getProperty("driver");
                     String url = prop.getProperty("url");
