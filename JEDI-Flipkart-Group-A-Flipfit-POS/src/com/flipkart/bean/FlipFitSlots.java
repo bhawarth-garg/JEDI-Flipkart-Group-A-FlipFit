@@ -6,7 +6,7 @@ package com.flipkart.bean;
  */
 public class FlipFitSlots {
 
-    private String slotsId; // Unique identifier for the slot
+    private int slotsId; // Unique identifier for the slot
     private int startTime; // Start time of the slot
     private int seatCount; // Number of available seats in the slot
 
@@ -16,7 +16,7 @@ public class FlipFitSlots {
      * @param startTime Start time of the slot
      * @param seatCount Number of available seats in the slot
      */
-    public FlipFitSlots(String slotsId, int startTime, int seatCount) {
+    public FlipFitSlots(int slotsId, int startTime, int seatCount) {
         this.setSlotsId(slotsId);
         this.setStartTime(startTime);
         this.setSeatCount(seatCount);
@@ -26,7 +26,7 @@ public class FlipFitSlots {
      * Retrieves the unique identifier for the slot.
      * @return The unique identifier for the slot
      */
-    public String getSlotsId() {
+    public int getSlotsId() {
         return slotsId;
     }
 
@@ -34,7 +34,7 @@ public class FlipFitSlots {
      * Sets the unique identifier for the slot.
      * @param slotsId The unique identifier to set
      */
-    public void setSlotsId(String slotsId) {
+    public void setSlotsId(int slotsId) {
         this.slotsId = slotsId;
     }
 
@@ -70,3 +70,4 @@ public class FlipFitSlots {
         this.seatCount = seatCount;
     }
 }
+

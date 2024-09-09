@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package com.flipkart.client;
 import com.flipkart.bean.FlipFitGym;
@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 public class GymFlipFitGymOwnerMenu {
 
-    FlipFitGymOwnerService flipFitGymOwnerService;
+    FlipFitGymOwnerService flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
     static Scanner obj = new Scanner(System.in);
 
     /*
@@ -28,15 +28,7 @@ public class GymFlipFitGymOwnerMenu {
      * @param email The email id of the gym owner.
      * @param password The password of the gym owner.
      * @return True If login is successful, false otherwise.
-     *
-     *
      */
-
-    public void CreateInstance()
-    {
-        flipFitGymOwnerService = new FlipFitGymOwnerServiceOperation();
-        flipFitGymOwnerService.CreateLists();
-    }
     boolean verifyGymOwner(String email, String password) {
         return flipFitGymOwnerService.validateLogin(email, password);
     }
@@ -48,11 +40,10 @@ public class GymFlipFitGymOwnerMenu {
      */
     boolean gymOwnerLogin(String email, String password) {
         if (flipFitGymOwnerService.validateLogin(email, password)) {
-            LocalDateTime now = LocalDateTime.now();
+        	LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDateTime = now.format(formatter);
             System.out.println("Login Successful\n"+formattedDateTime);
-
             while (true) {
                 System.out.println("***********GYM OWNER MENU***********");
                 System.out.println("1. View all available gyms");
@@ -61,14 +52,12 @@ public class GymFlipFitGymOwnerMenu {
                 int y = Integer.parseInt(obj.nextLine());
 
                 switch (y) {
-
-                    case 1:
-                        displayGyms(email);
-                        break;
                     case 2:
                         addGym(email);
                         break;
-
+                    case 1:
+                        displayGyms(email);
+                        break;
                     case 3:
                         return true;
                 }
@@ -94,12 +83,10 @@ public class GymFlipFitGymOwnerMenu {
         flipFitGym.setGymAddress(address);
         flipFitGym.setLocation(location);
         flipFitGym.setGymName(gymName);
-        flipFitGym.setStatus("Unverified");
-
+        flipFitGym.setStatus("unverified");
         List<FlipFitSlots> flipFitSlots = new ArrayList<>();
         System.out.println("\nHow many slots to be entered?");
         int slotNo = Integer.parseInt(obj.nextLine());
-
         int x = 1;
         while (slotNo != 0) {
             System.out.println("Add slot no. " + x++ + "\n");
@@ -107,7 +94,7 @@ public class GymFlipFitGymOwnerMenu {
             int startTime = Integer.parseInt(obj.nextLine());
             System.out.println("\nEnter available seats:");
             int number = Integer.parseInt(obj.nextLine());
-            FlipFitSlots slot = new FlipFitSlots(Integer.toString(x - 1), startTime, number);
+            FlipFitSlots slot = new FlipFitSlots(x - 1, startTime, number);
             flipFitSlots.add(slot);
             slotNo--;
         }
@@ -148,7 +135,6 @@ public class GymFlipFitGymOwnerMenu {
         FlipFitGymOwner flipFitGymOwner = new FlipFitGymOwner();
         List<FlipFitGym> emptyGymList = new ArrayList<>();
         flipFitGymOwner.setOwnerEmail(ownerEmail);
-        flipFitGymOwner.setOwnerId(ownerEmail);
         flipFitGymOwner.setPAN(PAN);
         flipFitGymOwner.setOwnerName(ownerName);
         flipFitGymOwner.setGST(GST);
@@ -156,12 +142,15 @@ public class GymFlipFitGymOwnerMenu {
         flipFitGymOwner.setNationalId(nationalId);
         flipFitGymOwner.setPhoneNo(phoneNo);
         flipFitGymOwner.setGyms(emptyGymList);
-        flipFitGymOwner.setStatus("Unverified");
+        flipFitGymOwner.setStatus("verified");
 
         flipFitGymOwnerService.createGymOwner(flipFitGymOwner);
     }
 
-
+    /*
+     * Display all gyms owned by the gym owner.
+     * @param userId The ID of the gym owner.
+     */
     void displayGyms(String userId) {
         List<FlipFitGym> gymsList = flipFitGymOwnerService.viewMyGyms(userId);
         int x = 1;

@@ -4,13 +4,13 @@ package com.flipkart.bean;
 import java.util.List;
 
 public class FlipFitGym {
-    private String gymId;
-    private String gymName;
-    private String gymAddress;
-    private String location;
-    private List<FlipFitSlots> flipFitSlots;
-    private String ownerId;
-    private String status;
+    private int gymId; 
+    private String gymName; 
+    private String gymAddress; 
+    private String location; 
+    private List<FlipFitSlots> flipFitSlots; 
+    private String ownerId; 
+    private String status; 
 
     public String getOwnerId() {
         return ownerId; // Retrieves the owner ID of the gym.
@@ -36,11 +36,11 @@ public class FlipFitGym {
         this.flipFitSlots = flipFitSlots; // Sets the list of slots available in the gym.
     }
 
-    public String getGymId() {
+    public int getGymId() {
         return gymId; // Retrieves the gym ID.
     }
 
-    public void setGymId(String gymId) {
+    public void setGymId(int gymId) {
         this.gymId = gymId; // Sets the gym ID.
     }
 

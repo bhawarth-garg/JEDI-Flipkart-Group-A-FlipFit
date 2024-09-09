@@ -35,3 +35,4 @@ public class FlipFitNotifications {
         this.message = message; // Sets the message content of the notification
     }
 }
+
