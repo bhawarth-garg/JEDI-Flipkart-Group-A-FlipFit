@@ -99,7 +99,7 @@ public class GymFlipFitAdminMenu {
 	    public boolean verifyAdminCredentials(String id, String pass) {
 	        try {
 	            Properties pr = new Properties(); 
-	            InputStream inputStream = DatabaseConnector.class.getClassLoader().getResourceAsStream("src/config.properties");
+	            InputStream inputStream = DatabaseConnector.class.getClassLoader().getResourceAsStream("./config.properties");
 	            pr.load(inputStream);
 	            String admin_id = pr.getProperty("admin_id");
 	            String admin_password = pr.getProperty("admin_password");

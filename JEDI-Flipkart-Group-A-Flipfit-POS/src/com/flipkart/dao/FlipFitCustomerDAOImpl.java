@@ -1,9 +1,6 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.FlipFitBookings;
-import com.flipkart.bean.FlipFitGym;
-import com.flipkart.bean.FlipFitSlots;
-import com.flipkart.bean.FlipFitUser;
+import com.flipkart.bean.*;
 import com.flipkart.exception.BookingCancellationFailedException;
 import com.flipkart.exception.RegistrationFailedException;
 import com.flipkart.exception.SlotsUnavailableException;
@@ -15,6 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
+
+
 
 /**
  * Implementation of FlipFitCustomerDAOInterface for customer operations.
@@ -23,6 +23,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
 
     DatabaseConnector connector;
     Connection conn;
+    static Scanner obj = new Scanner(System.in);
 
     @Override
     public List<FlipFitGym> getAllGymsByArea() {
@@ -66,10 +67,99 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         }
         return flipFitGyms;
     }
+    public void AddCard(String UserEmail, String CardNumber, int cvv, String Exp ) {
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        String insertQuery = "INSERT INTO payment (userId, cardNumber, cvv, exp) VALUES(?,?,?,?)";
+
+        try {
+            preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setString(1, UserEmail);
+            preparedStatement.setString(2, CardNumber);
+            preparedStatement.setInt(3, cvv);
+            preparedStatement.setString(4, Exp);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void viewCards(String userEmail){
+        conn = DatabaseConnector.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<FlipFitPayment> flipFitPayments = new ArrayList<>();
+        String viewCardQuery = "SELECT id, cardNumber, cvv, exp FROM payment where userId=?";
+        try {
+            preparedStatement = conn.prepareStatement(viewCardQuery);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String number = resultSet.getString("cardNumber");
+                int cvv = resultSet.getInt("cvv");
+                String exp = resultSet.getString("exp");
+
+                FlipFitPayment flipFitPayment = new FlipFitPayment();
+                flipFitPayment.setId(id);
+                flipFitPayment.setCardNumber(number);
+                flipFitPayment.setCvv(cvv);
+                flipFitPayment.setExp(exp);
+                flipFitPayments.add(flipFitPayment);
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (FlipFitPayment card : flipFitPayments) {
+            System.out.println("Card ID: " + card.getId() + " Card Number: " + card.getCardNumber() + " CVV: " + card.getCvv() + " Expiry: " + card.getExp() );
+        }
+
+
+//        return flipFitPayments;
+    }
+
 
     @Override
     public boolean bookSlot(int gymId, int time, String email) {
         conn = DatabaseConnector.getConnection();
+        System.out.println("Press1 to view all saved cards:");
+        System.out.println("Press2 to add new Card: ");
+
+        int choice = Integer.parseInt(obj.nextLine());
+        switch (choice) {
+
+            case 1:
+                System.out.println("Available Cards:");
+                viewCards(email);
+                break;
+
+            case 2:
+                System.out.println("Enter Card Number: ");
+                String CardNumber= obj.nextLine();
+                System.out.println("Enter CVV: ");
+                int cvv = Integer.parseInt(obj.nextLine());
+                System.out.println("Enter Expiry Date (in mm/yyyy format): ");
+                String exp = obj.nextLine();
+
+                AddCard(email, CardNumber, cvv, exp);
+                viewCards(email);
+                break;
+            default:
+                System.out.println("Invalid Input");
+                break;
+
+
+        }
+
+        System.out.println("Select/Enter Card ID from Above Provided List: ");
+
+        System.out.println("Enter Card Id: ");
+        int cardID= Integer.parseInt(obj.nextLine());
+
         PreparedStatement preparedStatement = null;
         String insertQuery = "INSERT INTO Booking (userId, status, date, time, slotId, GymId ) VALUES(?,?,?,?,?,?)";
 
@@ -93,7 +183,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
             if (rowsInserted > 0) {
                 // Successfully booked
                 alterSeatsWithGymIDSlotID(gymId, time, remaining - 1);
-                System.out.println("Booking successful!");
+                System.out.println("Payment successful!");
                 return true;
             } else {
                 throw new SlotsUnavailableException();

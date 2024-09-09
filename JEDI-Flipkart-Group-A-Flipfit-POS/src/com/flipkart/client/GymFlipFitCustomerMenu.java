@@ -54,7 +54,6 @@ public class GymFlipFitCustomerMenu {
                         int gymId = Integer.parseInt(obj.nextLine());
                         System.out.println("Slot Time");
                         int time = Integer.parseInt(obj.nextLine());
-
                         if (bookSlot(gymId, time, username)) {
                             System.out.println("Booked Successfully");
                         } else {
