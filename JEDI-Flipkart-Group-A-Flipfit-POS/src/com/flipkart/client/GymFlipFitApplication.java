@@ -3,6 +3,7 @@ import com.flipkart.business.FlipFitGymOwnerService;
 import com.flipkart.business.FlipFitGymOwnerServiceOperation;
 import com.flipkart.business.FlipFitUserServiceOperations;
 import com.flipkart.business.FlipFitUserServices;
+import com.flipkart.utils.StringFormatter;
 
 import com.flipkart.utils.DatabaseConnector;
 
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.Scanner;
+
+import static com.flipkart.utils.StringFormatter.*;
 
 
 public class GymFlipFitApplication {
@@ -22,6 +25,7 @@ public class GymFlipFitApplication {
     static Scanner obj = new Scanner(System.in);
 
     static Properties pr = new Properties();
+    static StringFormatter stringFormatter = new StringFormatter();
     
     /*
      * @main application 
@@ -30,16 +34,17 @@ public class GymFlipFitApplication {
 
    
     public static void main(String[] args) {
-        System.out.println("************************************************************");
-        System.out.println("        Welcome to the FlipFit Application!!");
-        System.out.println("************************************************************");
+        System.out.println(color(YELLOW,"************************************************************"));
+        System.out.println(color(BLUE, "        Welcome to the FlipFit Application!!"));
+        System.out.println(color(YELLOW,"************************************************************"));
         boolean exitFlag = false;
         while(true) {
-            System.out.println("================================");
-            System.out.println("Press 1 for Registration");
-            System.out.println("Press 2 for Login");
-            System.out.println("Press 3 for Update Password");
-            System.out.println("Press 4 for Exit");
+            System.out.println(color(WHITE,"================================"));
+            System.out.println(color(GREEN, "Press 1 for Registration"));
+            System.out.println(color(GREEN, "Press 2 for Login"));
+            System.out.println(color(GREEN, "Press 3 for Update Password"));
+            System.out.println(color(GREEN, "Press 4 for Exit"));
+
             int option= Integer.parseInt(obj.nextLine());
             switch (option) {
                 case 2 :
