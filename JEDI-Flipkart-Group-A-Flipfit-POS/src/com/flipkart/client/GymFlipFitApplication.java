@@ -40,10 +40,12 @@ public class GymFlipFitApplication {
         boolean exitFlag = false;
         while(true) {
             System.out.println(color(WHITE,"================================"));
+
             System.out.println(color(GREEN, "Press 1 for Registration"));
             System.out.println(color(GREEN, "Press 2 for Login"));
             System.out.println(color(GREEN, "Press 3 for Update Password"));
             System.out.println(color(GREEN, "Press 4 for Exit"));
+            System.out.println(color(GREEN, "Select Choice: "));
 
             int option= Integer.parseInt(obj.nextLine());
             switch (option) {
