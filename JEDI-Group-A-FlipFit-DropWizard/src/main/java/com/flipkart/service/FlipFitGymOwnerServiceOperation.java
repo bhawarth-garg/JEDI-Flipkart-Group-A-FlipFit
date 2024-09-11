@@ -1,5 +1,5 @@
 
-package main.java.com.flipkart.service;
+package com.flipkart.service;
 import com.flipkart.model.*;
 import com.flipkart.dao.*;
 import java.util.HashMap;

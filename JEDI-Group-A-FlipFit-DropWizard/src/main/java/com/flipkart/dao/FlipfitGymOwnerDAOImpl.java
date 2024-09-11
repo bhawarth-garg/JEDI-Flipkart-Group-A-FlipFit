@@ -57,7 +57,7 @@ public class FlipfitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
         }
         catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println("SQL Error: "+ e.getMessage());
         }
         insertSlots(flipFitGym.getSlots(),id);
 
@@ -69,13 +69,14 @@ public class FlipfitGymOwnerDAOImpl implements FlipFitGymOwnerDAOInterface {
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
         conn = DatabaseConnector.getConnection();
-      System.out.println("check"+flipFitGymOwner.getPAN());
+//      System.out.println("check"+flipFitGymOwner.getPAN());
 
         try {
             statement = conn.createStatement();
 //            resultSet = statement.executeQuery(insertQuery);
             preparedStatement =  conn.prepareStatement(SQLConstants.GYM_OWNER_INSERT);
 
+            System.out.println("Creating Gym Owner in DAO"+flipFitGymOwner.getPAN());
             // 5. Set values for the placeholders in the prepared statement
 
             preparedStatement.setString(1, flipFitGymOwner.getOwnerEmail());

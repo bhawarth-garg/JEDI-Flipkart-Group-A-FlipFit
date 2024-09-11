@@ -1,4 +1,4 @@
-package main.java.com.flipkart.restcontroller;
+package com.flipkart.restcontroller;
 
 import com.flipkart.model.*;
 import com.flipkart.service.*;
@@ -18,6 +18,7 @@ public class GymOwnerController {
     FlipFitGymOwnerService gymOwnerService;
 
     public GymOwnerController(FlipFitGymOwnerServiceOperation gymOwnerService) {
+        System.out.println("/n/n/n In GymOwner cLass Constructor /n/n/n");
         this.gymOwnerService = gymOwnerService;
     }
 

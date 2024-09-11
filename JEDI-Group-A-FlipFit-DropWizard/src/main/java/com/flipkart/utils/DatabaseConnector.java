@@ -1,4 +1,4 @@
-package main.java.com.flipkart.utils;
+package com.flipkart.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class DatabaseConnector {
     public static Connection getConnection() {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/flipfit", "root", "Nehal@813kavya");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/flipfit", "root", "yail5Eix!@#%");
                 return con;
             }
             catch (Exception e) {

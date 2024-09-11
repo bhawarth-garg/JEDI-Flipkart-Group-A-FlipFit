@@ -1,5 +1,5 @@
 
-package main.java.com.flipkart.service;
+package com.flipkart.service;
 
 
 public class FlipFitGymServiceOperations implements FlipFitGymServices{

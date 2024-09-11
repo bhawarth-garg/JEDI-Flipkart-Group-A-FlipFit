@@ -1,4 +1,4 @@
-package main.java.com.flipkart.restcontroller;
+package com.flipkart.restcontroller;
 
 
 import com.flipkart.model.*;
@@ -20,6 +20,8 @@ public class CustomerController {
     FlipFitUserServices userServices;
 
     public CustomerController(FlipFitUserServiceOperations userServices) {
+
+        System.out.println("/n/n/n In User cLass Constructor /n/n/n");
         this.userServices = userServices;
     }
 

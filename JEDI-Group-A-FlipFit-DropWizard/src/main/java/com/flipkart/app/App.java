@@ -31,8 +31,15 @@ public class App extends Application<Configuration> {
 
         System.out.println("HERE");
         e.jersey().register(new HelloController());
+
+
+        System.out.print("/n/n/n AdminWorking /n/n/n");
         e.jersey().register(new AdminController(new FlipFitAdminServiceOperation()));
+
+        System.out.print("/n/n/n CustomerWorking /n/n/n");
         e.jersey().register(new CustomerController(new FlipFitUserServiceOperations()));
+
+        System.out.print("/n/n/n GymOwnerWorking /n/n/n");
         e.jersey().register(new GymOwnerController(new FlipFitGymOwnerServiceOperation()));
     }
 

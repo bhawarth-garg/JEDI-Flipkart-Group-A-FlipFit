@@ -1,4 +1,4 @@
-package main.java.com.flipkart.restcontroller;
+package com.flipkart.restcontroller;
 
 import com.flipkart.model.*;
 import com.flipkart.service.*;
@@ -20,10 +20,13 @@ import javax.xml.validation.Validator;
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminController {
 
+
+
     private Validator validator;
     private FlipFitAdminService adminService;
 
     public AdminController(FlipFitAdminServiceOperation adminService){
+        System.out.println("/n/n/n In Admin cLass Constructor /n/n/n");
         this.adminService = adminService;
     }
 
@@ -54,6 +57,7 @@ public class AdminController {
     @Path("/viewGymOwners")
     @Produces(MediaType.APPLICATION_JSON)
     public List<FlipFitGymOwner> viewGymOwners(){
+        System.out.println("/n/n/n/n/n View Gym Owner List/n/n/n/n/n/n/");
         List<FlipFitGymOwner> gymOwnerList =  adminService.viewGymOwners();
         System.out.println("Check");
         return gymOwnerList;

@@ -68,7 +68,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
     public boolean bookSlot(int gymId, int time, String email) {
         conn = DatabaseConnector.getConnection();
         PreparedStatement preparedStatement = null;
-        String insertQuery = "INSERT INTO Booking ( userId, status, date, time, slotId, GymId ) VALUES(?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO Booking ( status, date, time, slotId, gymId,UserEmail  ) VALUES(?,?,?,?,?,?)";
 
         try {
             // Check if slots are available
@@ -78,12 +78,13 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
             }
 
             preparedStatement = conn.prepareStatement(insertQuery);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, "CONFIRMED");
-            preparedStatement.setInt(3, 11); // Assuming date is fixed for this example
-            preparedStatement.setInt(4, time);
-            preparedStatement.setInt(5, 5);
-            preparedStatement.setInt(6, gymId);
+
+            preparedStatement.setString(1, "CONFIRMED");
+            preparedStatement.setInt(2, 11); // Assuming date is fixed for this example
+            preparedStatement.setInt(3, time);
+            preparedStatement.setInt(4, 5);
+            preparedStatement.setInt(5, gymId);
+            preparedStatement.setString(6, email);
 
             int rowsInserted = preparedStatement.executeUpdate();
 
@@ -184,7 +185,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("bookingId");
+                int id = resultSet.getInt("userId");
                 int date = resultSet.getInt("date");
                 int time = resultSet.getInt("time");
                 int slotId = resultSet.getInt("slotId");
@@ -213,7 +214,7 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         PreparedStatement preparedStatement = null;
 
         try {
-            String deleteQuery = "DELETE FROM Booking WHERE bookingId = ?";
+            String deleteQuery = "DELETE FROM Booking WHERE userID = ?";
             preparedStatement = conn.prepareStatement(deleteQuery);
             preparedStatement.setInt(1, bookingId);
 

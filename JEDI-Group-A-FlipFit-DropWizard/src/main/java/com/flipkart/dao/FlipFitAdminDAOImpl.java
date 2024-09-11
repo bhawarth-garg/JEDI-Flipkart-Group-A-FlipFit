@@ -125,8 +125,10 @@ public class FlipFitAdminDAOImpl implements FlipFitAdminDAOInterface {
             preparedStatement = conn.prepareStatement(SQLConstants.ADMIN_VIEW_ALL_GYMOWNERS);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            System.out.println("/n/n/n/n" +  resultSet+ "/n/n/n/n");
+
             while (resultSet.next()) {
-                int id = resultSet.getInt("owner_id");
+                int id = resultSet.getInt("Id");
                 String phoneNo = resultSet.getString("phone_number");
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
