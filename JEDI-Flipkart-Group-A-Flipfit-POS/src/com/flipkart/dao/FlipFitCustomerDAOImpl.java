@@ -291,26 +291,30 @@ public class FlipFitCustomerDAOImpl implements FlipFitCustomerDAOInterface {
         List<FlipFitBookings> flipFitBookings = new ArrayList<>();
 
         try {
-            String sqlQuery = "SELECT * FROM Booking WHERE userId = ?";
+            String sqlQuery = "SELECT * FROM Booking WHERE UserEmail = ?";
             preparedStatement = conn.prepareStatement(sqlQuery);
             preparedStatement.setString(1, userId);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("bookingId");
+                int id= resultSet.getInt("userID");
                 int date = resultSet.getInt("date");
                 int time = resultSet.getInt("time");
                 int slotId = resultSet.getInt("slotId");
                 String status = resultSet.getString("status");
                 int gymId = resultSet.getInt("gymId");
+                String UserEmail = resultSet.getString("UserEmail");
 
                 FlipFitBookings booking = new FlipFitBookings();
+
                 booking.setBookingId(id);
+
                 booking.setDate(date);
                 booking.setTime(time);
                 booking.setSlotId(slotId);
                 booking.setStatus(status);
                 booking.setGymId(gymId);
+                booking.setUserEmail(UserEmail);
 
                 flipFitBookings.add(booking);
             }

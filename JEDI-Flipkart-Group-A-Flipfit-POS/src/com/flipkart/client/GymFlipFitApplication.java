@@ -54,7 +54,7 @@ public class GymFlipFitApplication {
                     String userId = obj.nextLine();
                     System.out.println("Enter password");
                     String password = obj.nextLine();
-                    System.out.println("Enter role (Admin/Customer/GymOwner)");
+                    System.out.println(color(RED, "Enter role (Admin/Customer/GymOwner)"));
                     String role = obj.nextLine();
 
                     switch (role) {
@@ -62,7 +62,7 @@ public class GymFlipFitApplication {
                             GymFlipFitAdminMenu admin = new GymFlipFitAdminMenu();
 
                             if(!admin.verifyAdminCredentials(userId,password)){
-                                System.out.println("Invalid Credentials");
+                                System.out.println(color(RED,"Invalid Credentials"));
                                 break;
                             }
 
@@ -70,17 +70,17 @@ public class GymFlipFitApplication {
                             LocalDateTime now = LocalDateTime.now();
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                             String formattedDateTime = now.format(formatter);
-                            System.out.println("Login Successful\n"+formattedDateTime);
+                            System.out.println(color(GREEN, "Login Successful\n"+formattedDateTime));
                             while(flag) {
 
-                                System.out.println("Press 1 for View all users");
-                                System.out.println("Press 2 for View all Gyms");
-                                System.out.println("Press 3 for View all Gym Owners");
-                                System.out.println("Press 4 for Verify Gym");
+                                System.out.println(color(BLUE, "Press 1 for View all users"));
+                                System.out.println(color(BLUE, "Press 2 for View all Gyms"));
+                                System.out.println(color(BLUE, "Press 3 for View all Gym Owners"));
+                                System.out.println(color(BLUE, "Press 4 for Verify Gym"));
 //                                System.out.println("Press 5 for Verify GymOwner");
-                                System.out.println("Press 5 for View pending Gyms");
+                                System.out.println(color(BLUE, "Press 5 for View pending Gyms"));
 //                                System.out.println("Press 7 for View pending Gym Owners");
-                                System.out.println("Press 6 for Exit");
+                                System.out.println(color(BLUE, "Press 6 for Exit"));
 
                                 int k = Integer.parseInt(obj.nextLine());
 
@@ -95,7 +95,7 @@ public class GymFlipFitApplication {
                                         admin.viewGymOwners();
                                         break;
                                     case 4:
-                                        System.out.println("Enter the Gym Id to be verified ");
+                                        System.out.println(color(GREEN, "Enter the Gym Id to be verified "));
                                         int id1 = Integer.parseInt(obj.nextLine());
                                         admin.verifyGym(id1);
                                         break;
@@ -120,16 +120,16 @@ public class GymFlipFitApplication {
 
                         case "Customer" :
                             if(!customer.userLogin(userId,password))
-                                System.out.println("Invalid credentials");
+                                System.out.println(color(RED, "Invalid credentials"));
                             break;
                         case "GymOwner" :
                             if(!owner.gymOwnerLogin(userId,password)){
-                                System.out.println("Invalid credentials");
+                                System.out.println(color(RED, "Invalid credentials"));
                             }
 
                             break;
                         default:
-                            System.out.println("Invalid Options Selected. Please Try Again:(");
+                            System.out.println(color(RED,"Invalid Options Selected. Please Try Again:("));
                             break;
 
                     }
@@ -151,27 +151,27 @@ public class GymFlipFitApplication {
                     }
                     break;
                 case 3 :
-                    System.out.println("-----------Password Change -----------------------");
-                    System.out.println("Enter email");
+                    System.out.println(color(BLUE,"-----------Password Change -----------------------"));
+                    System.out.println(color(GREEN, "Enter email"));
                     String user = obj.nextLine();
-                    System.out.println("Enter password");
+                    System.out.println(color(GREEN, "Enter password"));
                     String userPassword = obj.nextLine();
-                    System.out.println("Enter role (Admin/Customer/GymOwner)");
+                    System.out.println(color(GREEN, "Enter role (Admin/Customer/GymOwner)"));
                     String respectiveRole = obj.nextLine();
-                    System.out.println("Enter New password");
+                    System.out.println(color(GREEN, "Enter New password"));
                     String updatedPassword = obj.nextLine();
 
                     switch (respectiveRole) {
                         case "Customer" :
                             if(!customer.validateUser(user,userPassword))
-                                System.out.println("Invalid credentials");
+                                System.out.println(color(RED,"Invalid credentials"));
                             else{
                                 userService.updateGymUserPassword(user,userPassword, updatedPassword);
                             }
                             break;
                         case "GymOwner" :
                             if(!owner.verifyGymOwner(user,userPassword)){
-                                System.out.println("Invalid credentials");
+                                System.out.println(color(RED,  "Invalid credentials"));
                             }
                             else{
                                 flipFitGymOwnerService.updateGymOwnerPassword(user,userPassword, updatedPassword);
@@ -183,10 +183,10 @@ public class GymFlipFitApplication {
                 case 4 :
                     //end
                     exitFlag = true;
-                    System.out.println("Thank you for using FlipFit :)");
+                    System.out.println(color(BLUE, "Thank you for using FlipFit :)"));
                     break;
                 default:
-                    System.out.println("Invalid Options Selected. Please Try Again:( ");
+                    System.out.println(color(RED, "Invalid Options Selected. Please Try Again:( "));
                     break;
                 }
             if(exitFlag)break;
